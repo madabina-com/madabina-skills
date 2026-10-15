@@ -1,0 +1,95 @@
+name: Validate and publish to npm
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check types
+        run: npm run typecheck
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build package
+        run: npm run build
+
+      - name: Check package archive
+        run: npm pack --dry-run
+
+  publish:
+    name: Publish new version to npm
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      - name: Install current npm for trusted publishing
+        run: npm install --global npm@latest
+
+      - name: Check whether this version needs publishing
+        id: version
+        run: |
+          node --input-type=module <<'NODE'
+          import { appendFileSync, readFileSync } from 'node:fs';
+
+          const { name, version } = JSON.parse(readFileSync('package.json', 'utf8'));
+          const response = await fetch(`https://registry.npmjs.org/${encodeURIComponent(name)}`);
+          let shouldPublish = false;
+
+          if (response.status === 404) {
+            console.log(`Package ${name} is not on npm yet; skipping automatic publish for the initial bootstrap.`);
+          } else if (!response.ok) {
+            throw new Error(`npm registry returned ${response.status} ${response.statusText}`);
+          } else {
+            const metadata = await response.json();
+            shouldPublish = !Object.hasOwn(metadata.versions ?? {}, version);
+            console.log(shouldPublish
+              ? `Version ${name}@${version} is new and will be published.`
+              : `Version ${name}@${version} already exists; skipping publish.`);
+          }
+
+          appendFileSync(process.env.GITHUB_OUTPUT, `should_publish=${shouldPublish}\n`);
+          NODE
+
+      - name: Install dependencies
+        if: steps.version.outputs.should_publish == 'true'
+        run: npm ci
+
+      - name: Build package
+        if: steps.version.outputs.should_publish == 'true'
+        run: npm run build
+
+      - name: Publish with npm Trusted Publishing
+        if: steps.version.outputs.should_publish == 'true'
+        run: npm publish --access public
