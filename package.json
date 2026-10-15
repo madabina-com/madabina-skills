@@ -33,7 +33,7 @@
     "./skills/*": "./skills/*"
   },
   "bin": {
-    "madabina-skills": "./dist/cli.js"
+    "madabina-skills": "dist/cli.js"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
