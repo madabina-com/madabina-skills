@@ -1,19 +1,31 @@
 # madabina-skills
 
+![Madabina logo](https://cdn.madabina.com/static/madabina/logo/logo-madabina.svg)
+
 Public Madabina Agent Skills and a TypeScript SDK for the merchant REST API and OAuth-protected MCP server.
+
+Learn more about [Madabina](http://madabina.com).
 
 ## Install the skills
 
-Install the npm package, then copy the skills into an agent directory:
+### Option 1: Skills CLI
+
+```sh
+npx skills add madabina-com/madabina-skills --all --yes
+```
+
+The Skills CLI installs these skills from the public GitHub repository into the agent environment you choose.
+
+### Option 2: npm
+
+Install the package from npm, then copy the skills into an agent directory:
 
 ```sh
 npm install madabina-skills
-npx madabina-skills install --agent codex
-# or
-npx madabina-skills install --agent claude --global
+npx madabina-skills install
 ```
 
-Supported agent targets: Codex (`.agents/skills`) and Claude Code (`.claude/skills`). Project scope is the default; `--global` installs under the current user's home directory. The command only writes the three Madabina skill directories.
+To choose an agent explicitly or install globally, use `npx madabina-skills install --agent codex` or `npx madabina-skills install --agent claude --global`. Supported targets are Codex (`.agents/skills`) and Claude Code (`.claude/skills`).
 
 ## SDK: REST
 
@@ -53,6 +65,7 @@ The MCP SDK handles protocol OAuth discovery, PKCE, and token exchange through t
 ## Skills in this package
 
 - `madabina-platform`: platform orientation, privacy, and choosing integrations.
+- `madabina-brand`: verified visual identity references for Madabina-branded design.
 - `madabina-api`: authenticated merchant REST API usage.
 - `madabina-mcp`: OAuth MCP connection, scopes, and tool use.
 
@@ -67,12 +80,6 @@ npm run typecheck
 npm run build
 npm pack --dry-run
 ```
-
-## Publishing to npm
-
-Push commits to `main` to run package validation. The workflow skips versions already on npm and also skips publication while the package has never been bootstrapped. For the first release, publish the current version (`0.1.0`) once from a maintainer account with npm two-factor authentication, then configure **Trusted Publisher** in the package settings with GitHub Actions, repository `madabina-com/madabina-skills`, and workflow file `publish.yml`. Allow direct `npm publish` for that publisher.
-
-For each later release, increment `version` in `package.json` and `package-lock.json`, then push to `main`. The workflow builds, validates, and publishes that new version using OIDC; no long-lived npm token is stored in GitHub.
 
 ## Security
 

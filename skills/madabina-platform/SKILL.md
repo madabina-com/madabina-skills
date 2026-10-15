@@ -17,6 +17,7 @@ Use this skill when a user wants to understand or automate Madabina merchant-pla
 - For a human using the web console, explain the relevant dashboard or merchant workflow and ask for missing business choices.
 - For a programmatic REST integration, use the `madabina-api` skill and the merchant REST API.
 - For an AI assistant integrating tools/resources over Model Context Protocol, use `madabina-mcp` and the Streamable HTTP MCP endpoint.
+- For designing or reviewing Madabina-branded visuals, use `madabina-brand` and its visual identity reference.
 - Do not claim a capability exists merely because it would be useful. Check the current API documentation or ask the user to confirm the feature is enabled for their account.
 
 ## Safe operation

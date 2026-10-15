@@ -22,7 +22,7 @@ export async function installSkills(options: InstallOptions): Promise<string[]> 
   const base = scope === 'global' ? (options.homeDir ?? homedir()) : (options.cwd ?? process.cwd());
   const destinationRoot = join(base, agentDirectory[options.agent], 'skills');
   const sourceRoot = join(options.packageRoot ?? packageRootFromModule, 'skills');
-  const names = ['madabina-platform', 'madabina-api', 'madabina-mcp'];
+  const names = ['madabina-platform', 'madabina-brand', 'madabina-api', 'madabina-mcp'];
 
   for (const name of names) {
     const destination = join(destinationRoot, name);
