@@ -9,7 +9,7 @@ Use this reference to locate sources of truth and select checks for changes in t
 | Public Madabina skills | `skills/madabina-platform/`, `skills/madabina-brand/`, `skills/madabina-api/`, `skills/madabina-mcp/` | Their `SKILL.md` files and adjacent `references/` |
 | REST TypeScript SDK | `src/rest.ts`, `test/rest.test.ts` | `../web-app/routes/api.php`, related controllers and request validation; OpenAPI is partial |
 | MCP TypeScript SDK | `src/mcp.ts`, `test/mcp.test.ts` | `../mcp/src/tools/contracts.ts`, `../mcp/src/http/oauth.ts`, and MCP server implementation |
-| Skills installer | `src/cli.ts`, `src/installer.ts`, `test/installer.test.ts` | The copied public skill directories and supported `codex` / `claude` targets |
+| Skills installer and updates | `src/cli.ts`, `src/installer.ts`, `src/update.ts`, `test/installer.test.ts`, `test/update.test.ts` | The copied public skill directories and supported `codex`, `claude`, and Chriki/Pi targets; Codex and Chriki use Agent Skills `.agents/skills` locations. npm latest-version lookup runs only when the CLI is invoked and falls back to bundled skills offline |
 | Package contents and exports | `package.json`, `package-lock.json` | `files`, `exports`, `bin`, scripts, and the built `dist/` output |
 | CI and npm release | `.github/workflows/publish.yml` | GitHub Actions workflow and npm Trusted Publisher configuration |
 

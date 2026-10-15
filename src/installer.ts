@@ -3,7 +3,7 @@ import { homedir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-export type Agent = 'codex' | 'claude';
+export type Agent = 'codex' | 'claude' | 'chriki';
 export type InstallScope = 'project' | 'global';
 
 export interface InstallOptions {
@@ -14,7 +14,7 @@ export interface InstallOptions {
   packageRoot?: string;
 }
 
-const agentDirectory: Record<Agent, string> = { codex: '.agents', claude: '.claude' };
+const agentDirectory: Record<Agent, string> = { codex: '.agents', claude: '.claude', chriki: '.agents' };
 const packageRootFromModule = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
 export async function installSkills(options: InstallOptions): Promise<string[]> {

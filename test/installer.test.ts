@@ -27,4 +27,16 @@ describe('installSkills', () => {
 
     await expect(readFile(join(home, '.claude', 'skills', 'madabina-platform', 'SKILL.md'), 'utf8')).resolves.toContain('Madabina');
   });
+
+  it('installs Chriki skills where Pi discovers project and user skills', async () => {
+    const root = await mkdtemp(join(tmpdir(), 'madabina-skills-chriki-'));
+    roots.push(root);
+
+    const projectPaths = await installSkills({ agent: 'chriki', scope: 'project', cwd: root });
+    const globalPaths = await installSkills({ agent: 'chriki', scope: 'global', homeDir: root });
+
+    expect(projectPaths[0]).toContain(join('.agents', 'skills', 'madabina-platform'));
+    expect(globalPaths[0]).toContain(join('.agents', 'skills', 'madabina-platform'));
+    await expect(readFile(join(root, '.agents', 'skills', 'madabina-mcp', 'SKILL.md'), 'utf8')).resolves.toContain('name: madabina-mcp');
+  });
 });

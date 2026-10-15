@@ -1,6 +1,6 @@
 {
   "name": "madabina-skills",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Public Madabina Agent Skills and TypeScript API clients",
   "repository": {
     "type": "git",

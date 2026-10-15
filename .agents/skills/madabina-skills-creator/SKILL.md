@@ -23,5 +23,5 @@ Use this skill for work in the `madabina-skills` repository. Read [the project w
 - Public skill content or references: inspect the affected `skills/<name>/` files and keep instructions aligned with the current API or MCP contract.
 - REST SDK: inspect `src/rest.ts` and `test/rest.test.ts`, then verify endpoints and validation against `../web-app/routes/api.php` and the relevant controllers.
 - MCP SDK: inspect `src/mcp.ts` and `test/mcp.test.ts`, then verify tool contracts and OAuth scopes against `../mcp/src/tools/contracts.ts` and `../mcp/src/http/oauth.ts`.
-- Installer or command behavior: inspect `src/cli.ts`, `src/installer.ts`, and `test/installer.test.ts`; confirm supported agent targets and project/global paths from the implementation.
+- Installer or command behavior: inspect `src/cli.ts`, `src/installer.ts`, `src/update.ts`, and the installer/update tests; confirm supported agent targets and project/global paths from the implementation.
 - Package, docs, or release: inspect `package.json`, `package-lock.json`, `README.md`, and `.github/workflows/publish.yml` before changing their behavior.

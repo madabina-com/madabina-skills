@@ -22,10 +22,21 @@ Install the package from npm, then copy the skills into an agent directory:
 
 ```sh
 npm install madabina-skills
-npx madabina-skills install
+npx madabina-skills install --agent codex
 ```
 
-To choose an agent explicitly or install globally, use `npx madabina-skills install --agent codex` or `npx madabina-skills install --agent claude --global`. Supported targets are Codex (`.agents/skills`) and Claude Code (`.claude/skills`).
+Both `install` and `update` check npm's lightweight `latest` metadata when run. If a newer package exists, the CLI runs that version and copies its skills; otherwise it copies the bundled skills. If npm is unreachable, it falls back to the bundled version. This check runs only when the CLI is invoked, never in the agent's response workflow.
+
+Run `update` to refresh an existing project or global installation:
+
+```sh
+npx madabina-skills update --agent codex
+npx madabina-skills update --agent claude --global
+npx madabina-skills update --agent chriki
+npx madabina-skills update --agent chriki --global
+```
+
+Supported targets are Codex (`.agents/skills`), Chriki/Pi (`.agents/skills` for projects and `~/.agents/skills` globally), and Claude Code (`.claude/skills`). Skills installed through the separate Skills CLI can be refreshed by running `npx skills add madabina-com/madabina-skills --all --yes` again.
 
 ## SDK: REST
 
